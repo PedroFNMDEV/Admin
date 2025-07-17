@@ -1,8 +1,8 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const pool = require('../config/database');
-const { authenticateToken, requireLevel } = require('../middleware/auth');
-const { logAdminAction } = require('../middleware/logger');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import { pool } from '../config/database.js';
+import { authenticateToken, requireLevel } from '../middleware/auth.js';
+import { logAdminAction } from '../middleware/logger.js';
 
 const router = express.Router();
 
@@ -286,4 +286,4 @@ router.delete('/:id', authenticateToken, requireLevel(['super_admin', 'admin']),
   }
 });
 
-module.exports = router;
+export default router;

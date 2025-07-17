@@ -1,8 +1,9 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const pool = require('../config/database');
-const { authenticateToken, requireLevel } = require('../middleware/auth');
-const { logAdminAction } = require('../middleware/logger');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { pool, settings } from '../config/database.js';
+import { authenticateToken, requireLevel } from '../middleware/auth.js';
+import { logAdminAction } from '../middleware/logger.js';
 
 const router = express.Router();
 
@@ -113,7 +114,7 @@ router.post('/', authenticateToken, requireLevel(['super_admin', 'admin']), asyn
     const senhaHash = await bcrypt.hash(senha, 10);
 
     // Gerar chave API
-    const chaveApi = jwt.sign({ id, email }, process.env.JWT_SECRET);
+    const chaveApi = jwt.sign({ id, email }, settings.JWT.SECRET);
 
     const [result] = await pool.execute(
       `INSERT INTO revendas (
@@ -275,4 +276,4 @@ router.delete('/:id', authenticateToken, requireLevel(['super_admin', 'admin']),
   }
 });
 
-module.exports = router;
+export default router;

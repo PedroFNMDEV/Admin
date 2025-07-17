@@ -1,4 +1,4 @@
-const pool = require('../config/database');
+import { pool } from '../config/database.js';
 
 const logAdminAction = async (adminId, acao, tabelaAfetada, registroId = null, dadosAnteriores = null, dadosNovos = null, req) => {
   try {
@@ -24,4 +24,4 @@ const logAdminAction = async (adminId, acao, tabelaAfetada, registroId = null, d
   }
 };
 
-module.exports = { logAdminAction };
+export { logAdminAction };

@@ -1,9 +1,9 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const pool = require('../config/database');
-const { authenticateToken } = require('../middleware/auth');
-const { logAdminAction } = require('../middleware/logger');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { pool, settings } from '../config/database.js';
+import { authenticateToken } from '../middleware/auth.js';
+import { logAdminAction } from '../middleware/logger.js';
 
 const router = express.Router();
 
@@ -37,8 +37,8 @@ router.post('/login', async (req, res) => {
     // Gerar token JWT
     const token = jwt.sign(
       { adminId: admin.codigo, email: admin.email },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      settings.JWT.SECRET,
+      { expiresIn: settings.JWT.EXPIRES_IN }
     );
 
     // Salvar sessão no banco
@@ -100,4 +100,4 @@ router.post('/logout', authenticateToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const pool = require('../config/database');
+import jwt from 'jsonwebtoken';
+import { pool, settings } from '../config/database.js';
 
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -10,7 +10,7 @@ const authenticateToken = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, settings.JWT.SECRET);
     
     // Verificar se o token ainda é válido no banco
     const [sessions] = await pool.execute(
@@ -57,4 +57,4 @@ const requireLevel = (requiredLevels) => {
   };
 };
 
-module.exports = { authenticateToken, requireLevel };
+export { authenticateToken, requireLevel };

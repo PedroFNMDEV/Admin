@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+import mysql from 'mysql2/promise';
 
 // Todas as configurações fixas aqui:
 const settings = {
@@ -50,7 +50,7 @@ const testConnection = async () => {
 testConnection();
 
 // Exporta o pool + as configurações
-module.exports = {
+export {
   pool,
   settings
 };

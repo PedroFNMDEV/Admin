@@ -1,8 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import { settings } from './config/database.js';
+
+// Importar rotas
+import authRoutes from './routes/auth.js';
+import revendasRoutes from './routes/revendas.js';
+import adminsRoutes from './routes/admins.js';
+import logsRoutes from './routes/logs.js';
+import dashboardRoutes from './routes/dashboard.js';
 
 const app = express();
 
@@ -18,7 +25,7 @@ app.use(limiter);
 
 // CORS
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: settings.CORS_ORIGIN,
   credentials: true
 }));
 
@@ -30,11 +37,11 @@ app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', true);
 
 // Rotas
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/revendas', require('./routes/revendas'));
-app.use('/api/admins', require('./routes/admins'));
-app.use('/api/logs', require('./routes/logs'));
-app.use('/api/dashboard', require('./routes/dashboard'));
+app.use('/api/auth', authRoutes);
+app.use('/api/revendas', revendasRoutes);
+app.use('/api/admins', adminsRoutes);
+app.use('/api/logs', logsRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Rota de teste
 app.get('/api/health', (req, res) => {
@@ -52,11 +59,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'Rota não encontrada' });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = settings.PORT;
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
   console.log(`📊 Dashboard: http://localhost:${PORT}/api/health`);
 });
 
-module.exports = app;
+export default app;
