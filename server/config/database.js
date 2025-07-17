@@ -1,0 +1,56 @@
+const mysql = require('mysql2/promise');
+
+// Todas as configurações fixas aqui:
+const settings = {
+  NODE_ENV: 'development',
+  PORT: 3001,
+
+  DB: {
+    HOST: '104.251.209.68',
+    PORT: 35689,
+    NAME: 'db_SamCast',
+    USER: 'admin',
+    PASSWORD: 'Adr1an@'
+  },
+
+  JWT: {
+    SECRET: 'your-super-secret-jwt-key-change-this-in-production',
+    EXPIRES_IN: '24h'
+  },
+
+  CORS_ORIGIN: 'http://localhost:5173'
+};
+
+// Configuração do pool de conexões MySQL
+const dbConfig = {
+  host: settings.DB.HOST,
+  port: settings.DB.PORT,
+  user: settings.DB.USER,
+  password: settings.DB.PASSWORD,
+  database: settings.DB.NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  connectTimeout: 60000 // ✅ válido para mysql2
+};
+
+const pool = mysql.createPool(dbConfig);
+
+// Teste de conexão
+const testConnection = async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('✅ Conectado ao banco de dados MySQL');
+    connection.release();
+  } catch (error) {
+    console.error('❌ Erro ao conectar com o banco de dados:', error.message);
+  }
+};
+
+testConnection();
+
+// Exporta o pool + as configurações
+module.exports = {
+  pool,
+  settings
+};
