@@ -37,21 +37,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
-        <div className="flex items-center justify-between h-16 px-6 bg-blue-600 text-white">
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl border-r border-gray-200 transform transition-transform duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+        <div className="flex items-center justify-between h-16 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
           <div className="flex items-center space-x-3">
             <img 
               src="/logo.png" 
               alt="Logo" 
-              className="h-8 w-auto"
+              className="h-8 w-auto drop-shadow-md"
             />
-            <h1 className="text-xl font-bold">Painel Administrativo</h1>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden"
+            className="lg:hidden hover:bg-white/20 p-1 rounded"
           >
             <X size={24} />
           </button>
@@ -62,8 +61,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
-                location.pathname === item.path ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600' : ''
+              className={`flex items-center px-6 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 ${
+                location.pathname === item.path ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-600 border-r-3 border-purple-600 shadow-sm' : ''
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -73,20 +72,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           ))}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-md">
                 {admin?.nome.charAt(0).toUpperCase()}
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-700">{admin?.nome}</p>
-                <p className="text-xs text-gray-500">{admin?.nivel_acesso}</p>
+                <p className="text-xs text-purple-600 font-medium">{admin?.nivel_acesso}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="text-gray-500 hover:text-red-600 transition-colors"
+              className="text-gray-500 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50"
               title="Sair"
             >
               <LogOut size={18} />
@@ -98,11 +97,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Main Content */}
       <div className="lg:ml-64">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b">
+        <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200">
           <div className="flex items-center justify-between h-16 px-6">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden"
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <Menu size={24} />
             </button>
