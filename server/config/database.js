@@ -18,7 +18,9 @@ const settings = {
     EXPIRES_IN: '24h'
   },
 
-  CORS_ORIGIN: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173']
+  CORS_ORIGIN: process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+    : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173']
 };
 
 // Configuração do pool de conexões MySQL
