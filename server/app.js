@@ -25,8 +25,19 @@ app.use(limiter);
 
 // CORS
 app.use(cors({
-  origin: settings.CORS_ORIGIN,
-  credentials: true
+  origin: function (origin, callback) {
+    // Permitir requests sem origin (mobile apps, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (settings.CORS_ORIGIN.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Não permitido pelo CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Body parser

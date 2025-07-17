@@ -1,7 +1,7 @@
 import { Revenda, RevendaFormData } from '../types/revenda';
 
 class RevendaService {
-  private baseURL = 'http://localhost:3001/api';
+  private baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
   private getAuthHeaders() {
     const token = localStorage.getItem('admin_token');
