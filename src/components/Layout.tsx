@@ -41,7 +41,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         <div className="flex items-center justify-between h-16 px-6 bg-blue-600 text-white">
-          <h1 className="text-xl font-bold">SamCast Admin</h1>
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="h-8 w-auto"
+            />
+            <h1 className="text-xl font-bold">Painel Administrativo</h1>
+          </div>
           <button
             onClick={() => setSidebarOpen(false)}
             className="lg:hidden"

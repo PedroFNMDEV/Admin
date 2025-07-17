@@ -5,7 +5,7 @@ import { useNotification } from '../contexts/NotificationContext';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Card } from '../components/Card';
-import { Activity, Lock, User } from 'lucide-react';
+import { Lock, User } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -43,11 +43,13 @@ export const Login: React.FC = () => {
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
-              <Activity className="text-white" size={32} />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="h-16 w-auto"
+            />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">SamCast Admin</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Painel Administrativo</h1>
           <p className="text-gray-600">Faça login para acessar o painel</p>
         </div>
 
